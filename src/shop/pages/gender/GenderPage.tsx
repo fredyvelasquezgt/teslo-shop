@@ -2,12 +2,13 @@ import React from 'react'
 import { CustomJumbotron } from '../../components/CustomJumbotron';
 import { ProductsGrid } from '../../components/ProductsGrid';
 import { CustomPagination } from '../../../components/custom/CustomPagination';
-import { products } from '../../../mocks/products.mock';
 import { useParams } from 'react-router';
+import { useProducts } from '../../hooks/useProducts';
 
 export const GenderPage = () => {
 
     const { gender } = useParams()
+    const { data } = useProducts()
     const genderLabel = gender === 'men'
         ? 'Hombre'
         : gender === 'women'
@@ -18,8 +19,8 @@ export const GenderPage = () => {
         <>
             <CustomJumbotron title={`Productos para ${genderLabel}`} />
 
-            <ProductsGrid products={products} />
-            <CustomPagination totalPages={7} />
+            <ProductsGrid products={data?.products || []} />
+            <CustomPagination totalPages={data?.pages || 1} />
         </>
     )
 }
