@@ -3,14 +3,11 @@
 
 import React from 'react'
 import { useParams } from 'react-router';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation } from '@tanstack/react-query';
 import { getProductByIdAction } from '../actions/get-product-by-id';
+import { Product } from '../../interfaces/product.interface';
 
 export const useProduct = (id: string) => {
-
-
-
-    //todo: manejar mutacion
 
     const query = useQuery({
         queryKey: ['products', { id, }],
@@ -20,7 +17,17 @@ export const useProduct = (id: string) => {
         //enabled: !!id
     })
 
+    //Mutacion
+
+    const { } = useMutation()
+
+
+    const handleSubmitForm = async (productLike: Partial<Product>) => {
+        console.log({ productLike })
+    }
+
     return {
-        ...query
+        ...query,
+        handleSubmitForm
     }
 }
