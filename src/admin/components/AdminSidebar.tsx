@@ -1,6 +1,4 @@
-import { CustomLogo } from '@/components/custom/CustomLogo';
 import { Link, useLocation } from 'react-router';
-import { useAuthStore } from '../../auth/store/auth.store';
 import {
   Home,
   Users,
@@ -11,23 +9,26 @@ import {
   Bell,
   HelpCircle,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
 } from 'lucide-react';
+import { CustomLogo } from '@/components/custom/CustomLogo';
+import { useAuthStore } from '@/auth/store/auth.store';
 
 interface SidebarProps {
   isCollapsed: boolean;
   onToggle: () => void;
 }
 
-export const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
-
-  const { user } = useAuthStore()
-
-  const { pathname } = useLocation()
+export const AdminSidebar: React.FC<SidebarProps> = ({
+  isCollapsed,
+  onToggle,
+}) => {
+  const { pathname } = useLocation();
+  const { user } = useAuthStore();
 
   const menuItems = [
     { icon: Home, label: 'Dashboard', to: '/admin' },
-    { icon: BarChart3, label: 'Products', to: '/admin/products' },
+    { icon: BarChart3, label: 'Productos', to: '/admin/products' },
     { icon: Users, label: 'Usuarios' },
     { icon: ShoppingCart, label: 'Ordenes' },
     { icon: FileText, label: 'Reportes' },
@@ -37,20 +38,23 @@ export const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) 
   ];
 
   const isActiveRoute = (to: string) => {
-    //TODO: ajustarlo cuando estemos en la pantalla de producto
-    if (pathname.includes('/admin/products/') && to === '/admin/products') return true;
+    // TODO: ajustarlo cuando estemos en la pantalla de producto
+    if (pathname.includes('/admin/products/') && to === '/admin/products') {
+      return true;
+    }
 
-    return pathname === to;
-  }
+    return pathname === to; // true, false
+  };
 
   return (
-    <div className={`bg-white border-r border-gray-200 transition-all duration-300 ease-in-out ${isCollapsed ? 'w-18' : 'w-64'
-      } flex flex-col`}>
+    <div
+      className={`bg-white border-r border-gray-200 transition-all duration-300 ease-in-out  ${
+        isCollapsed ? 'w-18' : 'w-64'
+      } flex flex-col`}
+    >
       {/* Header */}
       <div className="p-4 border-b border-gray-200 flex items-center justify-between h-18">
-        {!isCollapsed && (
-          <CustomLogo />
-        )}
+        {!isCollapsed && <CustomLogo />}
         <button
           onClick={onToggle}
           className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
@@ -68,10 +72,11 @@ export const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) 
               <li key={index}>
                 <Link
                   to={item.to || '/admin'}
-                  className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 group ${isActiveRoute(item.to || '/xxxxx')
-                    ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
-                    : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
-                    }`}
+                  className={`flex items-center space-x-3 px-3 py-2 rounded-lg transition-all duration-200 group ${
+                    isActiveRoute(item.to || '/xxxx')
+                      ? 'bg-blue-50 text-blue-600 border-r-2 border-blue-600'
+                      : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
+                  }`}
                 >
                   <Icon size={20} className="flex-shrink-0" />
                   {!isCollapsed && (
@@ -92,7 +97,9 @@ export const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) 
               {user?.fullName.substring(0, 2)}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-gray-900 truncate">{user?.fullName}</p>
+              <p className="text-sm font-medium text-gray-900 truncate">
+                {user?.fullName}
+              </p>
               <p className="text-xs text-gray-500 truncate">{user?.email}</p>
             </div>
           </div>
@@ -101,4 +108,3 @@ export const AdminSidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) 
     </div>
   );
 };
-

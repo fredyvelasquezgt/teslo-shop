@@ -1,11 +1,7 @@
-import React from 'react'
-
 export const ProductPage = () => {
-
-
-    return (
-        <>
-            <h1>Product Page</h1>
-        </>
-    )
-}
+  return (
+    <>
+      <h1>Product Page</h1>
+    </>
+  );
+};

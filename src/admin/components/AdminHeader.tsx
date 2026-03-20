@@ -1,24 +1,23 @@
-import { Search, Bell, MessageSquare, Settings } from 'lucide-react';
-import { KeyboardEvent, useRef } from 'react';
+import React, { useRef, type KeyboardEvent } from 'react';
 import { useNavigate } from 'react-router';
+import { Search, Bell, MessageSquare, Settings } from 'lucide-react';
 
 export const AdminHeader: React.FC = () => {
-
-
   const inputRef = useRef<HTMLInputElement>(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   const handleSearch = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') return;
-    const query = inputRef.current.value;
+
+    const query = inputRef.current?.value;
 
     if (!query) {
-      navigate('/admin/products')
-      return
+      navigate('/admin/products');
+      return;
     }
 
-    navigate(`/admin/products?query=${query}`)
-
-  }
+    navigate(`/admin/products?query=${query}`);
+  };
 
   return (
     <header className="bg-white border-b border-gray-200 px-6 py-4 h-18">
@@ -26,7 +25,10 @@ export const AdminHeader: React.FC = () => {
         {/* Search */}
         <div className="flex-1 max-w-md">
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+            <Search
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+              size={20}
+            />
             <input
               ref={inputRef}
               onKeyDown={handleSearch}
